@@ -2,7 +2,7 @@
 
 namespace app\models;
 
-class User extends Model
+class User extends Record
 {
 	public $name;
 	public $email;
@@ -20,7 +20,7 @@ class User extends Model
 			]);
 	}
 
-	public function getTableName(): string
+	public static function getTableName(): string
 	{
 		return "users";
 	}

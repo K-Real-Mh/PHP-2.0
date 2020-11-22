@@ -2,9 +2,8 @@
 
 namespace app\models;
 
-use app\services\Db;
 
-class Product extends Model
+class Product extends Record
 {
 	public $id;
 	public $name;
@@ -12,26 +11,38 @@ class Product extends Model
 	public $price;
 	public $categoryId;
 
+	public static function getProducts(array $ids = [])
+	{
+		$tableName = static::getTableName();
+		$where = '';
+		if (!empty($ids)) {
+			$in = implode(', ', $ids);
+			$where = "WHERE id IN ($in)";
+			$sql = "SELECT * FROM {$tableName} {$where}";
+			return static::getQuery($sql, []);
+		} 
+	}
+
 	public function updateProduct()
 	{
 		$sql = "UPDATE {$this->tableName} SET price = :price, name = :name, description = :description   WHERE id = :id";
 		return $this->db->execute($sql, [
-			':id' => $this->id, 
-			':price' => $this->price, 
+			':id' => $this->id,
+			':price' => $this->price,
 			':name' => $this->name,
 			':description' => $this->description
-			]);
+		]);
 	}
 
 	public function createProduct()
 	{
 		$sql = "INSERT INTO {$this->tableName} (name, price, description) VALUES (:name, :price, :description)";
 		return $this->db->execute($sql, [
-			':id' => $this->id, 
-			':price' => $this->price, 
+			':id' => $this->id,
+			':price' => $this->price,
 			':name' => $this->name,
 			':description' => $this->description
-			]);
+		]);
 	}
 
 
@@ -39,7 +50,7 @@ class Product extends Model
 	{
 	}
 
-	public function getTableName(): string
+	public static function getTableName(): string
 	{
 		return "products";
 	}

@@ -5,10 +5,13 @@ include ROOT_DIR . "services/Autoloader.php";
 
 spl_autoload_register([new \app\services\Autoloader(), 'loadClass']);
 
-$products = (new \app\models\Product())->getAll();
+$controllerName = $_GET['c'] ?: 'product';
+$actionName = $_GET['a'];
 
-$product = (new \app\models\Product())->getById(2);
+$controllerClass = "app\controllers\\" . ucfirst($controllerName) . "Controller";
 
-$product = new \app\models\Product();
-
-var_dump($products);
+if(class_exists($controllerClass)) {
+    /** @var \app\controllers\ProductController $controller */
+    $controller = new $controllerClass;
+    $controller->runAction($actionName);
+}
