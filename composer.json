@@ -1,0 +1,12 @@
+{
+    "name": "domains/php_2",
+    "authors": [
+        {
+            "name": "Kirill",
+            "email": "kir3811@mail.ru"
+        }
+    ],
+    "require": {
+        "twig/twig": "^3.0"
+    }
+}
