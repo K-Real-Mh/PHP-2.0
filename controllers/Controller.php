@@ -11,6 +11,8 @@ abstract class Controller
 	protected $useLayout = true;
 	protected $layout = 'main';
 
+	
+
 	public function runAction($action = null)
 	{
 		$this->action = $action ?: $this->defaultAction;
